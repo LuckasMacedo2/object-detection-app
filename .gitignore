@@ -1,0 +1,88 @@
+# Arquivos temporários e diretorios
+*.swp
+*.bak
+*.class
+Thumbs.db
+.DS_Store
+.build
+captures/
+.gradle/
+local.properties
+/.idea
+/.gradle
+/captures
+
+# Arquivos gerados pelo Android Studio
+/.externalNativeBuild
+/capture/
+/build
+/app/build
+.idea/caches
+.idea/libraries
+.idea/modules.xml
+.idea/workspace.xml
+/app/release/
+/app/debug/
+.gradle/
+/app/release
+/app/debug
+/app/build/
+/build/
+/captures/
+/out/
+/.cxx/
+/.externalNativeBuild/
+/local.properties
+
+# Arquivos de configuração de projeto
+local.properties
+
+# Diretórios gerados
+/build/
+/captures/
+/.cxx/
+
+# Dados de depuração
+proguard/
+proguard-rules.pro
+debug.keystore
+
+# Android Studio
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/datasources.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/vcs.xml
+.idea/codeStyles/
+.idea/scopes/scope_settings.xml
+.idea/dart.xml
+
+# Arquivos de configuração específicos do sistema
+.gradle
+local.properties
+/captures
+
+# Configuração do projeto
+/.externalNativeBuild
+
+# Logs e saídas
+logs/
+app/build/
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+
+# Lint
+lint/ 
+
+# Versão do Android
+/*.iml
+/captures
+
+# Diretórios de saída
+android-*.*/out
+
+# Proguard
+proguard-*/
