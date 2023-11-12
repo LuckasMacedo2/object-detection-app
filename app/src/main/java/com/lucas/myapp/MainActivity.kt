@@ -33,11 +33,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textView: TextView
     private lateinit var selectImageButton: Button
     private lateinit var capturePhotoButton: Button
+    private lateinit var startCameraButton: Button
     private lateinit var loadingSpinner: ProgressBar
     private lateinit var contentLayout: LinearLayout
     private lateinit var rectImageView: RectImageView
-
-    private val tempFilesToDelete = mutableListOf<File>()
 
     private lateinit var scaleGestureDetector: ScaleGestureDetector
     private var scaleFactor = 1.0f
@@ -71,6 +70,17 @@ class MainActivity : AppCompatActivity() {
         capturePhotoButton.setOnClickListener {
             try {
                 capturarFoto()
+            } catch (excecao: Exception) {
+                showToast(excecao.message.toString())
+            }
+        }
+
+        startCameraButton = findViewById<Button>(R.id.startCameraButton)
+
+        startCameraButton.setOnClickListener {
+            try {
+                val intent = Intent(this, CameraActivity::class.java)
+                startActivity(intent)
             } catch (excecao: Exception) {
                 showToast(excecao.message.toString())
             }

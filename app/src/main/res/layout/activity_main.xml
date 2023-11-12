@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,8 +31,17 @@
             android:layout_height="wrap_content"
             android:background="#6363F4"
             android:text="@string/capturar_imagem"
+            android:layout_marginBottom="16dp"
             android:drawableRight="@android:drawable/ic_menu_camera"
             />
+
+        <Button
+            android:id="@+id/startCameraButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#6363F4"
+            android:text="Tempo real"
+            android:drawableRight="@android:drawable/ic_menu_view" />
 
 
         <View

@@ -59,7 +59,7 @@ class RectImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView
         }
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    /*override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
         // Obtém as dimensões da imagem definida através de setImageURI
@@ -69,5 +69,5 @@ class RectImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView
 
         // Define as dimensões na ImageView
         setMeasuredDimension(width, height)
-    }
+    }*/
 }
