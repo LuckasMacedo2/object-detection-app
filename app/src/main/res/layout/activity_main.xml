@@ -16,14 +16,25 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-    <Button
-        android:id="@+id/selectImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#6363F4"
-        android:text="@string/selecionar_imagem"
-        android:drawableRight="@android:drawable/ic_menu_gallery"
-        />
+        <Button
+            android:id="@+id/selectImageButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#6363F4"
+            android:text="@string/selecionar_imagem"
+            android:layout_marginBottom="16dp"
+            android:drawableRight="@android:drawable/ic_menu_gallery"
+            />
+
+        <Button
+            android:id="@+id/capturePhotoButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#6363F4"
+            android:text="@string/capturar_imagem"
+            android:drawableRight="@android:drawable/ic_menu_camera"
+            />
+
 
         <View
             android:layout_marginTop="16dp"
@@ -31,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#808080" />
+
     </LinearLayout>
 
     <TextView

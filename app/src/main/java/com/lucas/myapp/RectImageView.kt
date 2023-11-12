@@ -14,9 +14,9 @@ class RectImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView
 
     fun addRectangle(objeto: DetectedObject) {
         var objDraw = ObjectDraw(
-            RectF(objeto.retangulo[2].toFloat() + 50,
+            RectF(objeto.retangulo[2].toFloat(),
             objeto.retangulo[0].toFloat(),
-            objeto.retangulo[3].toFloat() + 50,
+            objeto.retangulo[3].toFloat(),
             objeto.retangulo[1].toFloat()
             ),
             objeto
@@ -46,7 +46,7 @@ class RectImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView
 
             // Informações do Objeto
             paint.style = Paint.Style.FILL
-            var x = rect.obj.retangulo[2] + 50
+            var x = rect.obj.retangulo[2]
             var y = rect.obj.retangulo[0]
             canvas.drawRect(RectF(x, y, x + 150, y + 30), paint)
             canvas.drawText("${ClasseObjeto.getObjetoPorClasse(rect.obj.classe)} - ${String.format("%.2f", rect.obj.percentualClasse * 100)}%", x, y + 20, paintText)
@@ -57,5 +57,17 @@ class RectImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView
 
             canvas.drawText("${rect.obj.defeituoso} - Level ${rect.obj.nivelDefeito}", x, y - 10, paintText)
         }
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        // Obtém as dimensões da imagem definida através de setImageURI
+        val drawable = drawable
+        val width = drawable?.intrinsicWidth ?: 0
+        val height = drawable?.intrinsicHeight ?: 0
+
+        // Define as dimensões na ImageView
+        setMeasuredDimension(width, height)
     }
 }

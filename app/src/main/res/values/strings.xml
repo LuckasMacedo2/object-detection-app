@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Object detector</string>
     <string name="selecionar_imagem">Selecionar Imagem</string>
+    <string name="capturar_imagem">Capturar imagem</string>
 </resources>
