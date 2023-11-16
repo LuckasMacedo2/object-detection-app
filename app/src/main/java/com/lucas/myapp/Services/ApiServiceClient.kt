@@ -1,5 +1,6 @@
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+package com.lucas.myapp.Services
+
+import com.lucas.myapp.APIConstantes
 import com.lucas.myapp.Data.DetectedObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,9 +19,9 @@ class ApiServiceClient {
         .build()
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.100.4:5001") // Substitua pelo seu endereço IP
+        .baseUrl(APIConstantes.URL)
         .addConverterFactory(GsonConverterFactory.create())
-        .client(okHttpClient) // Configure o OkHttpClient aqui
+        .client(okHttpClient)
         .build()
 
     private val apiService: ApiService = retrofit.create(ApiService::class.java)
@@ -35,14 +36,14 @@ class ApiServiceClient {
             override fun onResponse(call: Call<List<DetectedObject>>, response: Response<List<DetectedObject>>) {
                 if (response.isSuccessful) {
                     val detectedObjects: List<DetectedObject>? = response.body()
-                    callback(detectedObjects) // Retorna a lista de DetectedObject no callback
+                    callback(detectedObjects)
                 } else {
-                    callback(null) // Retorna null em caso de erro na resposta
+                    callback(null)
                 }
             }
 
             override fun onFailure(call: Call<List<DetectedObject>>, t: Throwable) {
-                callback(null) // Trate os erros de falha na chamada aqui e retorne null no callback
+                callback(null)
             }
         })
 

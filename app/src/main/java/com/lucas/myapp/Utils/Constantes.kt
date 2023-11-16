@@ -31,3 +31,9 @@ object ClasseObjeto {
         }
     }
 }
+
+object APIConstantes {
+    const val PORTA = 5001
+    const val IP = "192.168.100.4"
+    const val URL = "http://$IP:$PORTA"
+}

@@ -1,13 +1,11 @@
-package com.lucas.myapp
+package com.lucas.myapp.Views
 
-import ApiServiceClient
+import com.lucas.myapp.Services.ApiServiceClient
 import android.Manifest.permission.CAMERA
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -21,11 +19,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.lucas.myapp.Data.DetectedObject
-import com.squareup.picasso.Picasso
+import com.lucas.myapp.R
+import com.lucas.myapp.Utils.ArquivosUtil
+import com.lucas.myapp.Utils.BitmapUtil
 import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
 import java.lang.Float.max
 import java.lang.Float.min
 
@@ -41,8 +38,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var scaleGestureDetector: ScaleGestureDetector
     private var scaleFactor = 1.0f
 
-    private val REQUEST_CAMERA_PERMISSION = 123 // Pode ser qualquer número inteiro único
-    private val REQUEST_IMAGE_CAPTURE = 1 // Pode ser qualquer número inteiro único
+    private val REQUEST_CAMERA_PERMISSION = 123
+    private val REQUEST_IMAGE_CAPTURE = 1
 
     private val imagePicker: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()) { uri ->
@@ -88,12 +85,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun capturarFoto() {
-        // Verifique se a permissão da câmera já foi concedida
         if (ContextCompat.checkSelfPermission(this, CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            // Se a permissão ainda não foi concedida, solicite-a ao usuário
             ActivityCompat.requestPermissions(this, arrayOf(CAMERA), REQUEST_CAMERA_PERMISSION)
         } else {
-            // A permissão já foi concedida, inicie a atividade da câmera
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
         }
@@ -103,24 +97,20 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // O usuário concedeu permissão, inicie a atividade da câmera
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
-            } else {
-                // O usuário negou a permissão, você pode lidar com isso de acordo com suas necessidades
-            }
+            } else {  }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            // A foto foi capturada com sucesso
             var imageUri: Uri? = null
             try {
-                imageUri = saveBitmapAsUri(this, data?.extras?.get("data") as Bitmap)
+                imageUri = BitmapUtil.saveBitmapAsUri(this, data?.extras?.get("data") as Bitmap)
                 if (imageUri != null) {
-                    sendImageToAPI(imageUri) // Envie a imagem para a API
+                    sendImageToAPI(imageUri)
                 }
             } catch (excecao: Exception) {
                 showToast(excecao.message.toString())
@@ -140,8 +130,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT, // Largura da ImageView
-            LinearLayout.LayoutParams.WRAP_CONTENT  // Altura da ImageView
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
         layoutParams.gravity = Gravity.CENTER
         rectImageView.layoutParams = layoutParams
@@ -153,7 +143,7 @@ class MainActivity : AppCompatActivity() {
 
         val apiServiceClient = ApiServiceClient()
 
-        val imagePath = convertUriToFile(imageUri)
+        val imagePath = ArquivosUtil.convertUriToFile(imageUri, contentResolver, cacheDir)
 
         if (imagePath != null) {
             apiServiceClient.enviarImagem(imagePath) { listaDetectedObjects -> drawImage(listaDetectedObjects, imageUri) }
@@ -176,58 +166,6 @@ class MainActivity : AppCompatActivity() {
             contentLayout.visibility = View.VISIBLE
             loadingSpinner.visibility = View.GONE
         }
-    }
-
-    private fun convertUriToFile(uri: Uri): File? {
-        try {
-            val inputStream: InputStream? = contentResolver.openInputStream(uri)
-            val file = File(cacheDir, "temp_image.jpg")
-            val outputStream = FileOutputStream(file)
-            inputStream?.copyTo(outputStream)
-            inputStream?.close()
-            outputStream.close()
-            return file
-        } catch (e: Exception) {
-            showToast("Erro ao converter URI para arquivo: ${e.message}")
-            return null
-        }
-    }
-
-
-    fun saveBitmapAsUri(context: Context, bitmap: Bitmap, quality: Int = 100, maxWidth: Int = 1024, maxHeight: Int = 1024): Uri? {
-        var imageUri: Uri? = null
-        try {
-            val cachePath = File(context.cacheDir, "images")
-            cachePath.mkdirs() // Crie o diretório se não existir
-
-            val uniqueFileName = "image_${System.currentTimeMillis()}.png" // Nome de arquivo único
-
-
-            val scaledBitmap = scaleBitmap(bitmap, maxWidth, maxHeight)
-
-            val stream: OutputStream = FileOutputStream(cachePath.resolve(uniqueFileName))
-            scaledBitmap.compress(Bitmap.CompressFormat.PNG, quality, stream)
-            stream.close()
-            imageUri = Uri.fromFile(cachePath.resolve(uniqueFileName))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return imageUri
-    }
-
-    // Função para redimensionar o Bitmap
-    fun scaleBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
-        val width = bitmap.width
-        val height = bitmap.height
-
-        val scaleWidth = maxWidth.toFloat() / width
-        val scaleHeight = maxHeight.toFloat() / height
-        val scale = minOf(scaleWidth, scaleHeight)
-
-        val matrix = Matrix()
-        matrix.postScale(scale, scale)
-
-        return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true)
     }
 
     private fun showToast(message: String) {

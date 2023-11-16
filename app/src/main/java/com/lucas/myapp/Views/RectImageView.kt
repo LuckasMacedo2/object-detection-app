@@ -1,9 +1,11 @@
-package com.lucas.myapp
+package com.lucas.myapp.Views
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
+import com.lucas.myapp.ClasseObjeto
+import com.lucas.myapp.ClasseObjetoCor
 import com.lucas.myapp.Data.DetectedObject
 import com.lucas.myapp.Data.ObjectDraw
 
@@ -18,9 +20,6 @@ class RectImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView
     private var ymax: Int = 0
 
     fun addRectangle(objeto: DetectedObject, imagemInvertida: Boolean) {
-        //val escalaX = if(largura > 0) largura.toFloat() / objeto.largura.toFloat() else 1
-        //val escalaY = if(altura > 0)  altura.toFloat() / objeto.altura.toFloat() else 1
-
         xmin = if(imagemInvertida) 0 else 2
         xmax = if(imagemInvertida) 1 else 3
         ymin = if(imagemInvertida) 2 else 0
@@ -73,15 +72,4 @@ class RectImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView
         }
     }
 
-    /*override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
-        // Obtém as dimensões da imagem definida através de setImageURI
-        val drawable = drawable
-        val width = drawable?.intrinsicWidth ?: 0
-        val height = drawable?.intrinsicHeight ?: 0
-
-        // Define as dimensões na ImageView
-        setMeasuredDimension(width, height)
-    }*/
 }

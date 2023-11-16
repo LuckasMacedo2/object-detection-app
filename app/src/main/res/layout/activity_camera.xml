@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.lucas.myapp.RectImageView
+    <com.lucas.myapp.Views.RectImageView
         android:id="@+id/rectImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
