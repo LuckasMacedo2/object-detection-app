@@ -11,20 +11,30 @@ class RectImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView
     private val paint = Paint()
     private val paintText = Paint()
     private var rectanglesToDraw = mutableListOf<ObjectDraw>()
-    private var fator: Int = 0
 
-    fun addRectangle(objeto: DetectedObject, f: Int = 0) {
-        fator = f
+    private var xmin: Int = 0
+    private var xmax: Int = 0
+    private var ymin: Int = 0
+    private var ymax: Int = 0
+
+    fun addRectangle(objeto: DetectedObject, imagemInvertida: Boolean) {
         //val escalaX = if(largura > 0) largura.toFloat() / objeto.largura.toFloat() else 1
         //val escalaY = if(altura > 0)  altura.toFloat() / objeto.altura.toFloat() else 1
+
+        xmin = if(imagemInvertida) 0 else 2
+        xmax = if(imagemInvertida) 1 else 3
+        ymin = if(imagemInvertida) 2 else 0
+        ymax = if(imagemInvertida) 3 else 1
+
         var objDraw = ObjectDraw(
-            RectF(objeto.retangulo[0].toFloat(),
-            objeto.retangulo[2].toFloat(),
-            objeto.retangulo[1].toFloat() + fator,
-            objeto.retangulo[3].toFloat()
+            RectF(objeto.retangulo[xmin].toFloat(),
+                objeto.retangulo[ymin].toFloat(),
+                objeto.retangulo[xmax].toFloat() + if(imagemInvertida) 50 else 0,
+                objeto.retangulo[ymax].toFloat()
             ),
             objeto
         );
+
         rectanglesToDraw.add(objDraw)
         invalidate()
     }
@@ -50,13 +60,13 @@ class RectImageView(context: Context, attrs: AttributeSet?) : AppCompatImageView
 
             // Informações do Objeto
             paint.style = Paint.Style.FILL
-            var x = rect.obj.retangulo[0]
-            var y = rect.obj.retangulo[2]
+            var x = rect.obj.retangulo[xmin]
+            var y = rect.obj.retangulo[ymin]
             canvas.drawRect(RectF(x, y, x + 150, y + 30), paint)
             canvas.drawText("${ClasseObjeto.getObjetoPorClasse(rect.obj.classe)} - ${String.format("%.2f", rect.obj.percentualClasse * 100)}%", x, y + 20, paintText)
 
             // Defeituoso e nível do defeito
-            y = rect.obj.retangulo[3]
+            y = rect.obj.retangulo[ymax]
             canvas.drawRect(RectF(x, y, x + 210, y - 30), paint)
 
             canvas.drawText("${rect.obj.defeituoso} - Level ${rect.obj.nivelDefeito}", x, y - 10, paintText)

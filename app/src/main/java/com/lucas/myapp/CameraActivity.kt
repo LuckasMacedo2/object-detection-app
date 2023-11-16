@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Rect
 import android.hardware.Camera
 import android.net.Uri
 import android.os.*
@@ -99,15 +100,10 @@ class CameraActivity : AppCompatActivity() {
 
             if(surfaceView.width != 0 && surfaceView.height != 0) {
                 val parameters = camera?.parameters
-                parameters?.setPreviewSize(
-                    surfaceView.width,
-                    surfaceView.height
-                )
-                parameters?.setPictureSize(
-                    surfaceView.width,
-                    surfaceView.height
-                )
+                parameters?.setPreviewSize(surfaceView.width, surfaceView.height)
+                parameters?.setPictureSize(surfaceView.width, surfaceView.height)
                 camera?.parameters = parameters
+
             }
 
             camera?.startPreview()
@@ -117,7 +113,6 @@ class CameraActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-
 
     private fun captureImage() {
 
@@ -202,7 +197,7 @@ class CameraActivity : AppCompatActivity() {
                     rectImageView.clearRectangles()
 
                     listaDetectedObjects.forEach { objeto ->
-                        rectImageView.addRectangle(objeto, 50)
+                        rectImageView.addRectangle(objeto, true)
                     }
 
                     //rectImageView.invalidate()

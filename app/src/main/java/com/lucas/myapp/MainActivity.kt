@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity() {
                 rectImageView.setImageURI(imageUri)
 
                 listaDetectedObjects.forEach { objeto ->
-                    rectImageView.addRectangle(objeto)
+                    rectImageView.addRectangle(objeto, false)
                 }
             } else {
                 Toast.makeText(this, "Erro ao carregar a imagem", Toast.LENGTH_LONG).show()
