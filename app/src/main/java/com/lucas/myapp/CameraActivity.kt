@@ -4,9 +4,12 @@ import ApiServiceClient
 import android.Manifest.permission.CAMERA
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.hardware.Camera
 import android.net.Uri
 import android.os.*
+import android.view.Surface
 import androidx.appcompat.app.AppCompatActivity
 import android.view.SurfaceHolder
 import android.view.SurfaceView
@@ -80,6 +83,33 @@ class CameraActivity : AppCompatActivity() {
         try {
             camera = Camera.open(0)
             camera?.setPreviewDisplay(holder)
+
+            val cameraInfo = Camera.CameraInfo()
+            Camera.getCameraInfo(0, cameraInfo)
+            val rotation = windowManager.defaultDisplay.rotation
+            val degrees = when (rotation) {
+                Surface.ROTATION_0 -> 0
+                Surface.ROTATION_90 -> 90
+                Surface.ROTATION_180 -> 180
+                Surface.ROTATION_270 -> 270
+                else -> 0
+            }
+            val result = (cameraInfo.orientation - degrees + 360) % 360
+            camera?.setDisplayOrientation(result)
+
+            if(surfaceView.width != 0 && surfaceView.height != 0) {
+                val parameters = camera?.parameters
+                parameters?.setPreviewSize(
+                    surfaceView.width,
+                    surfaceView.height
+                )
+                parameters?.setPictureSize(
+                    surfaceView.width,
+                    surfaceView.height
+                )
+                camera?.parameters = parameters
+            }
+
             camera?.startPreview()
 
             handler.postDelayed(captureImageRunnable, captureInterval.toLong())
@@ -102,29 +132,34 @@ class CameraActivity : AppCompatActivity() {
                             isProcessingImage = true
 
                             try {
-                                val imageUri = byteArrayToUri(this@CameraActivity, data)
+                                val resizedBitmap = Bitmap.createScaledBitmap(
+                                    BitmapFactory.decodeByteArray(data, 0, data.size)
+                                    , surfaceView.height, surfaceView.width, true)
+
+                                val imageUri = bitmapToUri(this@CameraActivity, resizedBitmap)
                                 sendImageToAPI(imageUri!!)
                             } catch (e: Exception) {
                                 showToast(e.toString())
                             }
-                            showToast("Get Image")
+                            //showToast("Get Image")
                         })
                         camera?.stopPreview()
                         camera?.startPreview()
                     } catch (e: Exception) {
-                        showToast(e.toString())
+                        //showToast(e.toString())
                     }
                 }
             }
         }
     }
 
-    fun byteArrayToUri(context: Context, byteArray: ByteArray): Uri? {
+    fun bitmapToUri(context: Context, resizedBitmap: Bitmap): Uri? {
         try {
             val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "image_${System.currentTimeMillis()}.png")
 
             FileOutputStream(file).use { fos ->
-                fos.write(byteArray)
+                // Comprime o Bitmap para o formato PNG
+                resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
             }
 
             return Uri.fromFile(file)
@@ -163,13 +198,15 @@ class CameraActivity : AppCompatActivity() {
     private fun drawImage(listaDetectedObjects: List<DetectedObject>?) {
             if (listaDetectedObjects != null) {
 
-                rectImageView.clearRectangles()
+                if(listaDetectedObjects.any()) {
+                    rectImageView.clearRectangles()
 
-                listaDetectedObjects.forEach { objeto ->
-                    rectImageView.addRectangle(objeto)
+                    listaDetectedObjects.forEach { objeto ->
+                        rectImageView.addRectangle(objeto, 50)
+                    }
+
+                    //rectImageView.invalidate()
                 }
-
-                rectImageView.invalidate()
                 isProcessingImage = false
             } else {
                 Toast.makeText(this, "Erro ao carregar a imagem", Toast.LENGTH_LONG).show()

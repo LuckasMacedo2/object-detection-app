@@ -5,5 +5,7 @@ data class DetectedObject(
     val defeituoso: String,
     val nivelDefeito: Int,
     val classe: Int,
-    val percentualClasse: Double
+    val percentualClasse: Double,
+    val altura: Int,
+    val largura: Int
 )
