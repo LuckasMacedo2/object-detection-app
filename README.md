@@ -22,9 +22,11 @@ Obs.: Para exxecutar no smartphone compilar o projeto com o smartphone em modo d
 # Funcionamento do aplicativo
 
 O aplicativo obtém uma imagem por vez, envia para a API e espera o retorno para exibir para o usuário. A Figura a seguir apresenta o funcionamento do aplicativo em conjunto com a API
+
 ![Imagem10](https://github.com/LuckasMacedo2/object-detection-app/assets/33878052/0f103842-85a3-47be-a3b8-22ba18c60b73)
 
 As Figuras a seguir apresentam a interface gráfica da aplicação.
+
 ![Imagem11](https://github.com/LuckasMacedo2/object-detection-app/assets/33878052/4237b63f-2334-411b-aa69-fbb19df47c55)
 ![Imagem12](https://github.com/LuckasMacedo2/object-detection-app/assets/33878052/7a4dad8a-3571-4824-b570-dadbc23bcdb5)
 
@@ -70,9 +72,11 @@ Note: To run it on your smartphone, compile the project with your smartphone in 
 # How the application works
 
 The application takes one image at a time, sends it to the API and waits for it to return to display it to the user. The following figure shows how the application works together with the API
+
 ![Image10](https://github.com/LuckasMacedo2/object-detection-app/assets/33878052/0f103842-85a3-47be-a3b8-22ba18c60b73)
 
 The following figures show the application's graphical interface.
+
 ![Image11](https://github.com/LuckasMacedo2/object-detection-app/assets/33878052/4237b63f-2334-411b-aa69-fbb19df47c55)
 ![Image12](https://github.com/LuckasMacedo2/object-detection-app/assets/33878052/7a4dad8a-3571-4824-b570-dadbc23bcdb5)
 
