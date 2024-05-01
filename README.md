@@ -1,53 +1,3 @@
-# Object Detector Aplication
-
-## Descrição do aplicativo
-
-Este projeto contempla o código para um aplicativo Android utilizada para detectar os objetos defeituosos manufaturados aditivamente.
-
-O aplicativo foi desenvolvido utilizando a linguagem de programação Kotilin. A ideia do aplicativo é capturar imagens dos objetos, enviar para a API (https://github.com/LuckasMacedo2/object-detection-api) que realzará a detecção e retornará as informações que serão exibidas na tela e então exibir essas informações na tela pro usuário. Possui três modos de operação:
-
-- Imagem: Usuário seleciona uma imagem na galeria;
-- Foto: Usuário tira foto do objeto;
-- Vídeo (tempo real): A câmera é exibida e os objetos são detectados e atualizados na tela do smartphone.
-
-## Dependências
-
-- Android studio;
-- Linguagem Kotlin;
-- API que forma o backend presente no repositório: https://github.com/LuckasMacedo2/object-detection-api;
-- Executar a API mudando o endereço IP para o endereço IP do host. Tanto na API quanto no aplicativo. No aplicativo o IP deve ser alterado na classe: Utils/Constants/APIConstantes alterar a variável IP para o IP do host e executar tanto a API quanto o aplicativo.
-
-Obs.: Para exxecutar no smartphone compilar o projeto com o smartphone em modo debbug ou criar um arquivo .apk e abrir no smartphone.
-
-# Funcionamento do aplicativo
-
-O aplicativo obtém uma imagem por vez, envia para a API e espera o retorno para exibir para o usuário. A Figura a seguir apresenta o funcionamento do aplicativo em conjunto com a API
-
-![Imagem10](https://github.com/LuckasMacedo2/object-detection-app/assets/33878052/0f103842-85a3-47be-a3b8-22ba18c60b73)
-
-As Figuras a seguir apresentam a interface gráfica da aplicação.
-
-![Imagem11](https://github.com/LuckasMacedo2/object-detection-app/assets/33878052/4237b63f-2334-411b-aa69-fbb19df47c55)
-![Imagem12](https://github.com/LuckasMacedo2/object-detection-app/assets/33878052/7a4dad8a-3571-4824-b570-dadbc23bcdb5)
-
-
-
-# Dataset
-
-O dataset utilizado para treinar os modelos se encontra no link: https://github.com/LuckasMacedo2/manufactured-objects-defectives-dataset/tree/master. Mais informações podem ser encontradas no próprio repositório.
-
-# Referências:
-
-SILVA, L. M. D.; ALCALÁ, S. G. S.; BARBOSA, T. M. G. D. A. PROPOSTA DE MODELOS DE INTELIGÊNCIA ARTIFICIAL PARA DETECÇÃO DE DEFEITOS EM PEÇAS MANUFATURADAS ADITIVAMENTE. 2022. 
-
-SILVA, L. M. DA; ALCALÁ, S. G. S.; BARBOSA, T. M. G. DE A. Detecção de produtos manufaturados defeituosos utilizando modelos de inteligência artificial. 2022b. 
-
-MACEDO, L.; GOMES, S. UMA REVISÃO SISTEMÁTICA SOBRE A DETECÇÃO DE OBJETOS DEFEITUOSOS PRODUZIDOS POR MANUFATURA ADITIVA. Anais ... Encontro Nacional de Engenharia de Produção, 27 out. 2023. 
-
-SILVA, L. M. D. et al. ALGORITMOS DE APRENDIZAGEM PROFUNDA PARA DETECÇÃO DE OBJETOS DEFEITUOSOS PRODUZIDOS POR MANUFATURA ADITIVA. 2023.
-
-# English
-
 # Object Detector Application
 
 ## Application description
@@ -86,10 +36,4 @@ The dataset used to train the models can be found at the link: https://github.co
 
 # References:
 
-SILVA, L. M. D.; ALCALÁ, S. G. S.; BARBOSA, T. M. G. D. A. PROPOSTA DE MODELOS DE INTELIGÊNCIA ARTIFICIAL PARA DETECÇÃO DE DEFEITOS EM PEÇAS MANUFATURADAS ADITIVAMENTE. 2022. 
-
-SILVA, L. M. DA; ALCALÁ, S. G. S.; BARBOSA, T. M. G. DE A. Detecção de produtos manufaturados defeituosos utilizando modelos de inteligência artificial. 2022b. 
-
-MACEDO, L.; GOMES, S. UMA REVISÃO SISTEMÁTICA SOBRE A DETECÇÃO DE OBJETOS DEFEITUOSOS PRODUZIDOS POR MANUFATURA ADITIVA. Anais ... Encontro Nacional de Engenharia de Produção, 27 out. 2023. 
-
-SILVA, L. M. D. et al. ALGORITMOS DE APRENDIZAGEM PROFUNDA PARA DETECÇÃO DE OBJETOS DEFEITUOSOS PRODUZIDOS POR MANUFATURA ADITIVA. 2023.
+SILVA, L. M.; ALCALÁ, S. G. S.; BARBOSA, T. M. G. A.; ARAÚJO, R. Object and defect detection in additive manufacturing using deep learning algorithms. Production Engineering, p. 1-14, 2024. DOI: http://dx.doi.org/10.1007/s11740-024-01278-y
