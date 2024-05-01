@@ -23,7 +23,7 @@ Note: To run it on your smartphone, compile the project with your smartphone in 
 
 The application takes one image at a time, sends it to the API and waits for it to return to display it to the user. The following figure shows how the application works together with the API
 
-![Image10](https://github.com/LuckasMacedo2/object-detection-app/assets/33878052/0f103842-85a3-47be-a3b8-22ba18c60b73)
+![Process_Description](https://github.com/LuckasMacedo2/object-detection-app/assets/33878052/408feeae-1600-4445-9cb9-cb5bdbb58746)
 
 The following figures show the application's graphical interface.
 
